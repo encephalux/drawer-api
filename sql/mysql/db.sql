@@ -7,6 +7,8 @@ create table t_users(
     _first_name varchar(160) not null,
     _pseudo varchar(160) not null,
     _email varchar(255) not null,
+    _birthday date not null,
+    _password varchar(70) not null,
     _inserted_at timestamp not null default now(),
     _updated_at timestamp not null default now(),
     primary key(_id),
@@ -18,28 +20,23 @@ create table t_users(
 
 
 --media table--
-create table t_media(
-    _id bigint auto_increment not null,
-    _uuid varchar(40) not null,
-    _type varchar(10) not null,
-    _extension varchar(10) not null,
-    _size bigint not null,
-    _name varchar(160) not null,
-    _inserted_at datetime default now(),
-    primary key(_id),
-    constraint u_media_uuid unique(_uuid)
-
-)engine = innodb default charset utf8;
-
 
 create table t_users_media(
     _id bigint auto_increment not null,
     _uuid varchar(40) not null,
     _user bigint not null,
-    _media bigint not null,
     primary key(_id),
     constraint u_users_uuid unique(_uuid),
-    constraint fk_users_media_user foreign key(_user) references t_users(_id),
-    constraint fk_users_media_media foreign key(_media) references t_media(_id)
-
+    constraint fk_users_media_user foreign key(_user) references t_users(_id)
+    
 )engine = innodb default charset utf8;
+
+--
+
+create table t_session(
+    _id varchar(40) not null,
+    _data text not null,
+    _valide boolean default(true) not null
+    
+)engine = innodb default charset utf8;
+
