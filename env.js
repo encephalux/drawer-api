@@ -2,9 +2,9 @@
 
 const env = {
     jwt : {
-        issuer : 'xkvjksdg',
+        issuer : 'Drawoo.io',
         secret : {
-            key : 'auchefdedecider'
+            key : 'e5f2dab8-f153-4bb8-841e-f51dbe99f010'
         }
     },
 
@@ -17,9 +17,9 @@ const env = {
 
     database : {
         host : "localhost",
-        name : "Drawer",
+        name : "drawoo",
         user : "root",
-        password  : "root"
+        password  : ""
     }
 }
 
