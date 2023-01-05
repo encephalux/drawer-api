@@ -18,9 +18,9 @@ const env = {
 
     database: {
         host: "localhost",
-        database: "drawoo",
+        database: "Drawer",
         user: "root",
-        password: ""
+        password: "root"
     }
 }
 

@@ -19,14 +19,14 @@ const transporter = nodemailer.createTransport({
 const domain_name = "drawoo.io";
 const no_reply_email = `Drawoo no-reply  <no-reply@${domain_name}>`;
 
-module.exports.email_confirmation = ({_token, _email}) => {
-
+module.exports.email_confirmation = (_data) => {
+    console.log(_email);
     return transporter.sendMail({
         from: no_reply_email,
-        to: _email,
+        to: _data._email,
         replyTo: no_reply_email,
         subject: "Veuillez confirmer votre email - Drawoo",
         text: "",
-        html: `Veuillez cliquer sur le lien suivant pour confirmer votre email: http://localhost:3000/email-confirmation/${_token}`
+        html: `Veuillez cliquer sur le lien suivant pour confirmer votre email: http://localhost:3000/email-confirmation/${_data._token}`
     });
 };
