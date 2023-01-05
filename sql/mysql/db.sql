@@ -9,6 +9,7 @@ create table t_users(
     _email varchar(255) not null,
     _birthday date not null,
     _password varchar(70) not null,
+    _status enum('activate', 'deactivate') default('deactivate') not null,
     _inserted_at timestamp not null default now(),
     _updated_at timestamp not null default now(),
     primary key(_id),
