@@ -1,26 +1,27 @@
 'use strict';
 
 const env = {
-    jwt : {
-        issuer : 'Drawoo.io',
-        secret : {
-            key : 'e5f2dab8-f153-4bb8-841e-f51dbe99f010'
+    jwt: {
+        issuer: 'Drawoo.io',
+        secret: {
+            session: 'e5f2dab8-f153-4bb8-841e-f51dbe99f010',
+            email_confirmation: 'a2509f9f-8223-4336-838e-9cb8f070fa10'
         }
     },
 
-    api : {
+    api: {
         meta: {
-            name : "drawer_api",
-            version : "1.0.0"
+            name: "drawer_api",
+            version: "1.0.0"
         }
     },
 
-    database : {
-        host : "localhost",
-        name : "drawoo",
-        user : "root",
-        password  : ""
+    database: {
+        host: "localhost",
+        database: "drawoo",
+        user: "root",
+        password: ""
     }
 }
 
-module.exports =  env 
+module.exports = env

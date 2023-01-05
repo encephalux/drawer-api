@@ -1,48 +1,32 @@
-const mailer = require('nodemailer')
+'use strict';
 
-module.exports = {
-    mailSender : (req, res)=>{
-        const transporter = mailer.createTransport({
-            host :  "smtp-mail.outlook.com" ,
-            secureConnection : false,
-            port : 587,
-            tls : {
-                ciphers : "SSLv3",
-            },
-            auth : {
-                user :  "devrost@outlook.com",
-                pass : "mawugno12__"
-            }
-        })
+const nodemailer = require("nodemailer");
 
-        const mailOptions = {
-            from :  "devrost@outlook.com",
-            to : req.mail,
-            subject : 'Confimation email  ',
-            text : req.content
-            
-        }
-
-        transporter.sendMail(mailOptions, (err, result)=>{
-            if (err) {
-                console.log(err);
-                return res({
-                    status : 'ERROR'
-                })
-            } else {
-                console.log('Email sent: ' + result.response);
-
-                return res(null, {
-                    status : 'OK'
-                })
-            }
-        })
-    },
-
-    mail_validator : (email) =>{
-        var re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
-        if (re.test(email)) return !0;
-        return !1
+const transporter = nodemailer.createTransport({
+    host: "mail.komlankamekpo.pro",
+    port: 465,
+    secure: !0,
+    connectionTimeout: 60*1000,
+    socketTimeout: 60*1000,
+    greetingTimeout: 20*1000,
+    auth: {
+        user: "dev@komlankamekpo.pro",
+        pass: "20GmoD3v"
     }
-       
-}
+});
+
+
+const domain_name = "drawoo.io";
+const no_reply_email = `Drawoo no-reply  <no-reply@${domain_name}>`;
+
+module.exports.email_confirmation = ({_token, _email}) => {
+
+    return transporter.sendMail({
+        from: no_reply_email,
+        to: _email,
+        replyTo: no_reply_email,
+        subject: "Veuillez confirmer votre email - Drawoo",
+        text: "",
+        html: `Veuillez cliquer sur le lien suivant pour confirmer votre email: http://localhost:3000/email-confirmation/${_token}`
+    });
+};

@@ -3,6 +3,7 @@ const api = require('../../core/api');
 const jwt = require('jsonwebtoken');
 const env = require('../../env');
 const bcrypt = require("bcryptjs");
+const mailer = require("../../core/mailer");
 
 const db = require('../../core/db');
 
@@ -23,7 +24,9 @@ module.exports.register = (_req, _res) => {
                 _client.query(`insert into t_users(_uuid, _last_name, _first_name, _birthday, _email, _password) values(?, ?, ?, ?, ?, ?)`, [
                     uuid.v4(), _last_name, _first_name, _birthday, _email, _hash
                 ]).then(_result => {
-                    api.ok(_res, {_id: _result[0].insertId});
+                    api.ok(_res, {_id: _result[0].insertId}); // return the new user id to the client
+
+
                 }).catch(_err => console.log("Error on insertion, user registration") || api.internal(_res));
             }).catch(_err => console.log("Error on selection, user registration") || api.internal(_res));
         });
