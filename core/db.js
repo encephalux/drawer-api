@@ -1,13 +1,9 @@
-const mysql2 = require('mysql2')
+const mysql2 = require('mysql2/promise')
 const env = require('../env')
-const pool = mysql2.createPool({
-   
-        host : env.database.host,
-        user :env.database.user,
-        password : env.database.password,
-        database : env.database.name
-  
-})
 
-
-module.exports = pool
+module.exports = () => mysql2.createConnection({
+    host: env.database.host,
+    user: env.database.user,
+    password: env.database.password,
+    database: env.database.name
+});

@@ -5,22 +5,20 @@ create table t_users(
     _uuid varchar(40) not null,
     _last_name varchar(160) not null,
     _first_name varchar(160) not null,
-    _pseudo varchar(160) not null,
     _email varchar(255) not null,
     _birthday date not null,
-    _password varchar(70) not null,
-    _status enum('activate', 'deactivate') default('deactivate') not null,
+    _password text not null,
+    _status enum('activated', 'deactivated', 'deleted') default('activated') not null,
     _inserted_at timestamp not null default now(),
     _updated_at timestamp not null default now(),
     primary key(_id),
-    constraint u_users_name unique(_last_name, _first_name),
     constraint u_users_email unique(_email),
     constraint u_users_uuid unique(_uuid)
 
 ) engine = innodb default charset utf8;
 
 
---media table--
+-- media table--
 
 create table t_users_media(
     _id bigint auto_increment not null,
@@ -34,7 +32,8 @@ create table t_users_media(
 
 --
 
-create table t_session(
+-- drop table t_sessions;
+create table t_sessions(
     _id varchar(40) not null,
     _data text not null,
     _valide boolean default(true) not null
