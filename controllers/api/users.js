@@ -18,19 +18,8 @@ module.exports.register = (_req, _res) => {
 
         db().then(_client => {
             _client.query(`select _id from t_users where _email=?`, [_email]).then(_result => {
-                if(_result[0].length > 0) {jwt.sign({
-                    user: {
-                        _id: _result[0].insertId,
-                        _email: _email
-                    }
-                }, env.jwt.secret.email_confirmation, {algorithm: "HS512"}, (_err, _token) => {
-                    mailer.email_confirmation({
-                        _token: _token,
-                        _email: _email
-                    }).catch(_err => console.log(_err));
-                });
+                if(_result[0].length > 0)
                     return api.forbidden(_res, "USER_ALD_RGSTRD");
-                }
 
                 _client.query(`insert into t_users(_uuid, _last_name, _first_name, _birthday, _email, _password) values(?, ?, ?, ?, ?, ?)`, [
                     uuid.v4(), _last_name, _first_name, _birthday, _email, _hash
