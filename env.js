@@ -17,10 +17,10 @@ const env = {
     },
 
     database: {
-        host: "localhost",
-        database: "Drawer",
+        host: "drawoo_mariadb",
+        database: "drawoo",
         user: "root",
-        password: "root"
+        password: ""
     }
 }
 

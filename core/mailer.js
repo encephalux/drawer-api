@@ -9,18 +9,15 @@ const transporter = nodemailer.createTransport({
     connectionTimeout: 60*1000,
     socketTimeout: 60*1000,
     greetingTimeout: 20*1000,
-    auth: {
-        user: "dev@komlankamekpo.pro",
-        pass: "20GmoD3v"
-    }
+    auth: require("./mail_credentials")
 });
 
 
 const domain_name = "drawoo.io";
-const no_reply_email = `Drawoo no-reply  <no-reply@${domain_name}>`;
+const no_reply_email = `Drawoo no-reply  <no-reply@komlankamekpo.pro>`;
 
 module.exports.email_confirmation = (_data) => {
-    console.log(_email);
+
     return transporter.sendMail({
         from: no_reply_email,
         to: _data._email,
