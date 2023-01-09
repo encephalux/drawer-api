@@ -9,6 +9,7 @@ create table t_users(
     _birthday date not null,
     _password text not null,
     _status enum('activated', 'deactivated', 'deleted') default('activated') not null,
+    _confirmed boolean not null default false,
     _inserted_at timestamp not null default now(),
     _updated_at timestamp not null default now(),
     primary key(_id),
@@ -34,7 +35,7 @@ create table t_users_media(
 
 -- drop table t_sessions;
 create table t_sessions(
-    _id varchar(40) not null,
+    _id varchar(40)  not null,
     _data text not null,
     _valide boolean default(true) not null
     

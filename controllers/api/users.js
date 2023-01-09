@@ -57,10 +57,8 @@ module.exports.register = (_req, _res) => {
 };
 
 
-module.exports.confirm_account = (_req, _res)=>{
-    let token = _req.params.token;
-    
-    jwt.verify(token, env.jwt.secret.email_confirmation, (_err, _result)=>{
+module.exports.confirm_account = (_req, _res)=>{    
+    jwt.verify(_req.params.token, env.jwt.secret.email_confirmation, (_err, _result)=>{
         if(_err)  return  api.forbidden(_res, 'INVALID_TOKEN');
         api.ok(_res,_result )        
     });
@@ -115,23 +113,30 @@ module.exports.login = (_req, _res) => {
     db().then(_client =>{
         _client.query(`select * from t_users where _email = ? and _status = 'activated' and _confirmed = true`, [_email]).then(([_rows]) =>{
             if(_rows.length === 0)return api.forbidden(_res, "NO_ACCOUNT")
+            
             jwt.sign({
                 user: {
-                    _id: _rows._id,
-                    _uuid: _rows._uuid,
-                    _email: _rows._email
+                    _id: _rows[0]._id,
+                    _uuid: _rows[0]._uuid,
+                    _email: _rows[0]._email
                 }
             }, env.jwt.secret.session, {algorithm: "HS512"}, (_err, _token) => {
-                _res.cookie('session_token', _token);
-                api.ok(_res, _token);
+                
+                db().then(_client =>{
+                    _client.query(`insert into t_sessions(_id, _data, _valide) values(?, ?, ?)`, [uuid.v4(), _token, true]).then(() =>{
+                        _res.cookie('session_token', _token);
+                        api.ok(_res, _token);
+                    });
+                })
             });
+
+            
         });
     }).catch(_err => console.log("Error on login,  invalide user data " ) || api.internal(_res));
     
 };
 
 module.exports.logout = (_req, _res) => {
-   
     console.log(_req.cookies.session_token);
     _res.clearCookie('session_token');
 
