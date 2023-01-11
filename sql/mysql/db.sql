@@ -24,6 +24,7 @@ create table t_users(
 create table t_users_media(
     _id bigint auto_increment not null,
     _uuid varchar(40) not null,
+    _name varchar(160) not null,
     _user bigint not null,
     primary key(_id),
     constraint u_users_uuid unique(_uuid),

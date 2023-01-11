@@ -13,14 +13,16 @@ router.post('/users/confirm', user.confirm);
 router.post('/users/activate', user.activate);
 router.post('/users/deactivate', auth.checkToken, user.deactivate);
 router.post('/users/delete', auth.checkToken, user.delete);
-
+router.post('/users/update_password',auth.checkToken,  user.update_password);
+router.post('/users/reset_password',auth.checkToken, user.reset_password);
 router.get('/users/get', user.get);
-router.get('/users/email-confirmation/:token', user.confirm_account);
 
 //image routers
 router.post('/user/images/register', auth.checkToken, image.register);
 router.post('/user/images/delete', auth.checkToken, image.delete);
-router.post('/images/range', auth.checkToken, image.range);
+router.post('/user/images/range', auth.checkToken, image.range);
+router.post('/user/images/update', auth.checkToken, image.update);
+router.post('/user/images/rename', auth.checkToken, image.rename);
 
 router.get('/user/images/get', auth.checkToken, image.get);
 router.get('/user/images/get/:id',auth.checkToken, image.by_id);
